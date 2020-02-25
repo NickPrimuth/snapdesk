@@ -13,19 +13,24 @@ import React, { Component } from 'react';
 import { Form, Button } from 'react-bootstrap';
 let buttons;
 let user;
+
 class BystanderTicketBox extends Component {
   constructor(props) {
     super(props);
   }
   
   render () {
+    let acceptPayload = {
+      messageId: this.props.ticket.messageId,
+      userId: this.props.userId
+    }
     if (this.props.ticket.status === 'active') {
       //ticket published by another user but has not been pick up yet
       //Accept button will be active but Cancel button will not and mentee is anonymous
       user = 'Anonymous';
       buttons = (
         <span>
-          <Button onClick={() => this.props.acceptTicket(this.props.messageId)}type="button" className="btn btn-success">Accept</Button>
+          <Button onClick={() => this.props.acceptTicket(acceptPayload)}type="button" className="btn btn-success">Accept</Button>
           <Button disabled={true} type="button" className="btn btn-warning">Cancel</Button>
        </span>
         )

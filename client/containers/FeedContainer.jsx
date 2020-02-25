@@ -65,6 +65,7 @@ class FeedContainer extends Component {
             <BystanderTicketBox 
             cancelAccept={this.props.cancelAccept}
             acceptTicket={this.props.acceptTicket}
+            userId={this.props.userId}
             messageInput={this.props.activeTickets[i].messageInput}
             messageRating={this.props.activeTickets[i].messageRating}
             ticket={this.props.activeTickets[i]}

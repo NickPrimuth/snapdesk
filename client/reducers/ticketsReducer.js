@@ -44,7 +44,8 @@ const ticketsReducer = (state = ticketState, action) => {
         messageId: action.payload.ticketId,
         menteeId: action.payload.menteeId,
         timestamp: action.payload.timestamp,
-        status: 'active'
+        status: 'active',
+        mentorId: '',
       };
       // make a shallow copy of existing array and push new ticket to it
       let updatedTickets = state.activeTickets.slice();
@@ -60,10 +61,18 @@ const ticketsReducer = (state = ticketState, action) => {
 
     case types.ACCEPT_TICKET:
       //need to change tickets mentorId to the userId
-      return { 
-        ...state 
-      };
-
+      console.log(action.payload)
+      updatedTickets = state.activeTickets.map((ticket, index) => {
+        if (ticket.messageId === action.payload.messageId) {
+          ticket.mentorId = action.payload.userId
+          return ticket
+        }
+        return ticket;
+      })
+    return { 
+      ...state,
+      activeTickets: updatedTickets,
+    };
     case types.CANCEL_ACCEPT:
       return { 
         ...state 

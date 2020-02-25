@@ -64,7 +64,7 @@ ticketsController.addTicket = (req, res, next) => {
 }
 
 
-ticketController.deleteTicket = (req, res, next) => {
+ticketsController.deleteTicket = (req, res, next) => {
 
 }
 

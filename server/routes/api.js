@@ -14,7 +14,6 @@ apiRouter.get('/user',
   (req, res) => res.status(200).json(res.locals)
 );
 
-apiRouter
 
 apiRouter.get('/tickets',
     jwtsController.isLoggedIn,
