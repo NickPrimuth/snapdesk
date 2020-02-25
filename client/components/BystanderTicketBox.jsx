@@ -12,6 +12,7 @@
 import React, { Component } from 'react';
 import { Form, Button } from 'react-bootstrap';
 let buttons;
+let user;
 class BystanderTicketBox extends Component {
   constructor(props) {
     super(props);
@@ -21,6 +22,7 @@ class BystanderTicketBox extends Component {
     if (this.props.ticket.status === 'active') {
       //ticket published by another user but has not been pick up yet
       //Accept button will be active but Cancel button will not and mentee is anonymous
+      user = 'Anonymous';
       buttons = (
         <span>
           <Button onClick={() => this.props.acceptTicket(this.props.messageId)}type="button" className="btn btn-success">Accept</Button>
@@ -30,6 +32,7 @@ class BystanderTicketBox extends Component {
     } else if (this.props.ticket.userId !== this.props.ticket.mentorId && this.props.ticket.status === 'pending') {
        //this is when the ticket has been picked up by another mentor already
       //Both button will not be active and mentee is anonymous
+      user = 'Anonymous';
       buttons = (
         <span>
           <Button disabled={true} type="button" className="btn btn-success">Accept</Button>
@@ -39,6 +42,7 @@ class BystanderTicketBox extends Component {
     } else if (this.props.ticket.userId === this.props.ticket.mentorId && this.props.ticket.status === 'pending') {
        //user is the mentor
       //Cancel button is active but Accept is not. mentee userName is active
+      user = this.props.ticket.menteeId;
       buttons = (
         <span>
           <Button disabled={true} type="button" className="btn btn-success">Accept</Button>
@@ -53,6 +57,7 @@ class BystanderTicketBox extends Component {
         <p>Request: {this.props.messageInput}</p>
         <p>Expected Snaps: {this.props.messageRating}</p>
         {buttons}
+        <p>User: {user}</p>
       </div>
     )
   }

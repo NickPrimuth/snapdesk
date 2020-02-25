@@ -59,10 +59,15 @@ const ticketsReducer = (state = ticketState, action) => {
       };
 
     case types.ACCEPT_TICKET:
-      return { ...state };
+      //need to change tickets mentorId to the userId
+      return { 
+        ...state 
+      };
 
     case types.CANCEL_ACCEPT:
-      return { ...state };
+      return { 
+        ...state 
+      };
 
     case types.DELETE_TICKET:
         updatedTickets = state.activeTickets.map((ticket, index) => {
