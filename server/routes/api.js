@@ -35,5 +35,14 @@ apiRouter.post('/rooms', jwtsController.isLoggedIn, roomsController.addRooms, (r
   console.log('END OF ROOMS POST REQUEST', res.locals);
   res.status(200);
 })
+// apiRouter.get('/', jwtsController.isLoggedIn, adminController.getBannedList, (req, res) => {
+//   res.status(200).json(res.locals)
+// })
+
+// apiRouter.get('/', jwtsController.isLoggedIn, adminController.updateBannedList, (req, res) => {
+//   res.status(200).json(res.locals)
+// })
 
 module.exports = apiRouter;
+
+
