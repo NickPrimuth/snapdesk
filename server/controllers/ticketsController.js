@@ -81,5 +81,22 @@ ticketsController.updateTicketStatus = (req, res, next) => {
       log: `Error in middleware ticketsController.updateTicket: ${err}`
     }));
 }
+ticketsController.acceptTicket = (req, res, next) => {
+  const { menteeId, status, messageId} = req.body;
+  const acceptTicket = {
+    text: `
+    UPDATE tickets
+    SET mentee_id = $1 status = $2
+    WHERE _id = #3
+    `,
+    values: [menteeId, status, messageId]
+  }
+
+  db.query(acceptTicket)
+    .then(success => next())
+    .catch(err => next({
+      log: `Error in middleware ticketsController.acceptTicket: ${err}`
+    }))
+}
 
 module.exports = ticketsController;
