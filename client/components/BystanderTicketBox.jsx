@@ -10,9 +10,13 @@
  */
 
 import React, { Component } from 'react';
+<<<<<<< HEAD
 import { Form, Button } from 'react-bootstrap';
 let buttons;
 let user;
+=======
+import { Button } from 'react-bootstrap';
+>>>>>>> master
 
 class BystanderTicketBox extends Component {
   constructor(props) {
@@ -20,18 +24,29 @@ class BystanderTicketBox extends Component {
   }
   
   render () {
+<<<<<<< HEAD
     let acceptPayload = {
       messageId: this.props.ticket.messageId,
       userId: this.props.userId
     }
+=======
+
+    let buttons;
+
+>>>>>>> master
     if (this.props.ticket.status === 'active') {
       //ticket published by another user but has not been pick up yet
       //Accept button will be active but Cancel button will not and mentee is anonymous
       user = 'Anonymous';
       buttons = (
         <span>
+<<<<<<< HEAD
           <Button onClick={() => this.props.acceptTicket(acceptPayload)}type="button" className="btn btn-success">Accept</Button>
           <Button disabled={true} type="button" className="btn btn-warning">Cancel</Button>
+=======
+          <Button onClick={() => this.props.acceptTicket(this.props.messageId)}type="button" className="btn btn-success">Accept</Button>
+          <Button disabled={true} type="button" className="btn btn-secondary">Cancel</Button>
+>>>>>>> master
        </span>
         )
     } else if (this.props.ticket.userId !== this.props.ticket.mentorId && this.props.ticket.status === 'pending') {
@@ -41,7 +56,7 @@ class BystanderTicketBox extends Component {
       buttons = (
         <span>
           <Button disabled={true} type="button" className="btn btn-success">Accept</Button>
-          <Button disabled={true} type="button" className="btn btn-warning">Cancel</Button>
+          <Button disabled={true} type="button" className="btn btn-secondary">Cancel</Button>
        </span>
         )
     } else if (this.props.ticket.userId === this.props.ticket.mentorId && this.props.ticket.status === 'pending') {
@@ -58,7 +73,7 @@ class BystanderTicketBox extends Component {
   
     return (
 
-      <div className="BystanderTicketBox">
+      <div className="BystanderTicketBox ticketbox">
         <p>Request: {this.props.messageInput}</p>
         <p>Expected Snaps: {this.props.messageRating}</p>
         {buttons}
