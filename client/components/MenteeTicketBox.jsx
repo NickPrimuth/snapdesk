@@ -28,8 +28,13 @@ class MenteeTicketBox extends Component {
     if (this.props.ticket.status === 'active') {
       buttons = (
         <span>
+<<<<<<< HEAD
           <Button disabled={true} type="button" className="btn btn-success">Resolve</Button>
           <Button onClick={() => this.props.deleteTicket(this.props.ticket.userId)} type="button" className="btn btn-warning">Delete</Button>
+=======
+          <Button disabled={true} type="button" className="btn btn-secondary">Resolve</Button>
+          <Button onClick={() => this.props.deleteTicket(this.props.ticket.messageId)} type="button" className="btn btn-success">Delete</Button>
+>>>>>>> master
         </span>
       )
     } else {
