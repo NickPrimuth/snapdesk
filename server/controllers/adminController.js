@@ -3,10 +3,10 @@ const db = require('../models/userModel');
 adminController = {};
 
 adminController.getBanList = (req, res, next) => {
-  db.query('ENTER SQL QUERY HERE MOTHERFUCKER')
+  db.query('ENTER SQL QUERY HERE ')
     .then((data) => {
       console.log(data);
-      // FINISH THIS EQUATION MOTHERFUCKER
+      // FINISH THIS EQUATION 
       // ALSO FIGURE OUT IF THESE ARE THE BEST NAMES
       res.locals.banList = data;
       return next();
@@ -19,10 +19,10 @@ adminController.getBanList = (req, res, next) => {
 };
 
 adminController.updateBanList = (req, res, next) => {
-  db.query('ENTER SQL QUERY HERE MOTHERFUCKER')
+  db.query('ENTER SQL QUERY HERE ')
     .then((data) => {
       console.log(data);
-      // FINISH THIS EQUATION MOTHERFUCKER
+      // FINISH THIS EQUATION 
       // ALSO FIGURE OUT IF THESE ARE THE BEST NAMES
       res.locals.banList = data;
       return next();

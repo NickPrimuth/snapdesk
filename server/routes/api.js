@@ -28,18 +28,33 @@ apiRouter.get(
 );
 
 apiRouter.post('/tickets', jwtsController.isLoggedIn, ticketsController.addTicket, (req, res) =>
-  res.status(200).json(res.locals)
+  res.status(200)  
 );
+
+apiRouter.get('/rooms', jwtsController.isLoggedIn, roomsController.getRooms, (req, res) => {
+  console.log('END OF ROOMS GET REQUEST', res.locals);
+  res.status(200)
+})
 
 apiRouter.post('/rooms', jwtsController.isLoggedIn, roomsController.addRooms, (req, res) => {
   console.log('END OF ROOMS POST REQUEST', res.locals);
-  res.status(200);
+  res.status(200)
+})
+
+apiRouter.patch('/rooms', jwtsController.isLoggedIn, roomsController.createRooms, (req, res) => {
+  console.log('END OF ROOMS PATCH REQUEST', res.locals);
+  res.status(200)
+})
+
+apiRouter.post('/joinRoom', jwtsController.isLoggedIn, roomsController.joinRoom, (req, res) => {
+  console.log('END OF joinRoom POST REQUEST', res.locals);
+  res.status(200)
 })
 // apiRouter.get('/', jwtsController.isLoggedIn, adminController.getBannedList, (req, res) => {
 //   res.status(200).json(res.locals)
 // })
 
-// apiRouter.get('/', jwtsController.isLoggedIn, adminController.updateBannedList, (req, res) => {
+// apiRouter.patch('/', jwtsController.isLoggedIn, adminController.updateBannedList, (req, res) => {
 //   res.status(200).json(res.locals)
 // })
 

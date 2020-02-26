@@ -3,6 +3,26 @@ const db = require('../models/userModel');
 
 const roomsController = {};
 
+roomsController.getRooms = (req, res, next) => {
+  //if req.query.userId exists, include userId in params. else...
+   const getRooms = `
+   SELECT 
+   FROM
+   WHERE
+   `
+     
+  
+   `
+   SELECT t._id, t.snaps_given, t.message, t.status, t.timestamp, t.mentee_id, u.name mentee_name
+   FROM tickets t
+   INNER JOIN users u
+   ON u._id = t.mentee_id
+   WHERE status = 'active'
+   OR status = 'pending'
+   ORDER BY t._id;
+ `
+}
+
 roomsController.addRooms = (req, res, next) => {
   console.log('REQUEST BODY: ', req.body);
   const { name, admin } = req.body;
