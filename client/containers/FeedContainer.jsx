@@ -16,6 +16,8 @@ import * as ticketActions from "../actions/ticketActions";
 import MenteeTicketBox from "../components/MenteeTicketBox";
 import BystanderTicketBox from "../components/BystanderTicketBox";
 import TicketCreator from "../components/TicketCreator";
+import io from "socket.io-client";
+import store from '../store.js';
 
 const mapStateToProps = state => ({
   userId: state.user.userId,
@@ -30,9 +32,28 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch =>
   bindActionCreators(ticketActions, dispatch);
 
+let socket;
+
 class FeedContainer extends Component {
   constructor(props) {
     super(props);
+
+    const {dispatch} = this.props
+	
+	   socket = io.connect("http://localhost:3000")
+	   console.dir(socket)
+	   
+	   socket.on('ticketPosted',(res)=>{
+       console.dir(res)
+       this.props.getTickets(this.props.roomId);
+		   store.dispatch(ticketActions.postTicket(res))
+	   })
+
+	   socket.on('ticketUpdated',(res)=>{
+       console.dir(res)
+       this.props.getTickets(this.props.roomId);
+		   store.dispatch(ticketActions.updateTicket(res))
+	   })
   }
 
   componentWillMount() {
@@ -41,14 +62,14 @@ class FeedContainer extends Component {
 
   componentDidMount() {
     //set the timer for how often the ticket feed will reload active tickets
-    this.interval = setInterval(
-      () => this.props.getTickets(this.props.roomId),
-      5000
-    );
+    // this.interval = setInterval(
+    //   () => this.props.getTickets(this.props.roomId),
+    //   5000
+    // );
   }
 
   componentWillUnmount() {
-    clearInterval(this.interval);
+    // clearInterval(this.interval);
     document.title = "SnapDesk";
   }
 
@@ -57,6 +78,7 @@ class FeedContainer extends Component {
   }
 
   render() {
+    // const { dispatch, activeTickets } = this.props;
     // build activeTickets list
     let activeTickets;
     // if there are no active tickets, display a message in the background saying nothing here
@@ -76,9 +98,9 @@ class FeedContainer extends Component {
               messageInput={this.props.activeTickets[i].messageInput}
               messageRating={this.props.activeTickets[i].messageRating}
               ticket={this.props.activeTickets[i]}
-              //adding new userId
               userId={this.props.userId}
               key={this.props.activeTickets[i].messageId}
+              socket={socket}
             />
           );
           // otherwise render the mentee ticket box
@@ -91,6 +113,7 @@ class FeedContainer extends Component {
               messageRating={this.props.activeTickets[i].messageRating}
               ticket={this.props.activeTickets[i]}
               key={this.props.activeTickets[i].messageId}
+              socket={socket}
             />
           );
         }
@@ -103,7 +126,7 @@ class FeedContainer extends Component {
         <h1>{this.props.roomName}</h1>
         <div className="ticketDisplay overflow-auto">{activeTickets}</div>
         <div className="ticketCreator">
-          <TicketCreator {...this.props} key={this.props.userId} />
+          <TicketCreator {...this.props} key={this.props.userId} socket={socket} />
         </div>
       </div>
     );
