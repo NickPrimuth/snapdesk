@@ -19,7 +19,7 @@ export const postTicket = () => (dispatch, getState) =>
     .post('/api/tickets', {
       // POST request to create a new ticket
       mentee_id: getState().user.userId,
-      room_id: getState().rooms.activeRoom.id,
+      room_id: 1,
       message: getState().tickets.messageInput,
       status: 'active',
       snaps_given: getState().tickets.messageRating,
@@ -100,11 +100,11 @@ export const resolveTicket = id => ({
   payload: id,
 })
 
-export const acceptTicket = id => (dispatch, getState) =>
+export const acceptTicket = data => (dispatch, getState) =>
 // don't actually delete the ticket from the DB, just set status to deleted so it isn't displayed
 axios
   .put('/api/tickets/update', {
-    ticketId: id,
+    ticketId: data.messageId,
     status: 'pending',
     mentorId: getState().user.userId,
   })
