@@ -31,13 +31,7 @@ const ticketsReducer = (state = ticketState, action) => {
         activeTickets: [],
         ticketsCount: 0,
       }
-    // case types.USER_LOGIN:
-    //   console.log(action);
-    //   const isLoggedIn = action.payload.isLoggedIn;
-    //   return {
-    //     ...state,
-    //     isLoggedIn
-    //   };
+      
     case types.GET_TICKETS:
       return { ...state,
         activeTickets: action.payload,
@@ -68,8 +62,7 @@ const ticketsReducer = (state = ticketState, action) => {
         messageInput: '',
       };
 
-    case types.ACCEPT_TICKET:
-      //find index of the accepted ticket
+    case types.UPDATE_TICKET:
       updatedTickets = state.activeTickets.map((ticket, index) => {
         if (ticket.messageId === action.payload.messageId) {
           idx = index;
@@ -79,62 +72,14 @@ const ticketsReducer = (state = ticketState, action) => {
       //update the ticket's status to pending and messageId to mentor id
       updatedTickets[idx] =  {
         ...updatedTickets[idx],
-        mentorId: action.payload.userId, 
-        status: 'pending'
+        messageId: action.payload.ticketId,
+        status: action.payload.status,
+        mentorId: action.payload.mentorId,
       };
       return { //return updated state
         ...state,
         activeTickets: updatedTickets };
         
-    case types.CANCEL_ACCEPT:
-      //find index of the cancel-accept ticket
-      updatedTickets = state.activeTickets.map((ticket, index) => {
-        if (ticket.messageId === action.payload.messageId) {
-          idx = index;
-        }
-        return ticket;
-      });
-      //update ticket's status back to active and remove mentor id
-      updatedTickets[idx] =  {
-        ...updatedTickets[idx],
-        mentorId: '', 
-        status: 'active'
-      };
-      return { 
-        ...state,
-        activeTickets: updatedTickets };
-
-    case types.DELETE_TICKET:
-        updatedTickets = state.activeTickets.map((ticket, index) => {
-          if (ticket.messageId === action.payload) {
-            idx = index
-            return ticket
-          }
-          return ticket;
-        })
-        updatedTickets.splice(idx, 1)
-        // console.log(updatedTickets)
-      return { 
-        ...state,
-        activeTickets: updatedTickets,
-        ticketsCount: state.ticketsCount - 1
-      };
-
-    case types.RESOLVE_TICKET:
-        updatedTickets = state.activeTickets.map((ticket, index) => {
-          if (ticket.messageId === action.payload) {
-            idx = index
-            return ticket
-          }
-          return ticket;
-        })    
-        updatedTickets.splice(idx, 1)
-      return { 
-        ...state,
-        activeTickets: updatedTickets,
-        ticketsCount: state.ticketsCount - 1
-      };
-
     case types.UPDATE_MESSAGE:
       return { ...state, messageInput: action.payload };
 
