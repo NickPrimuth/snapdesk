@@ -3,24 +3,35 @@ const db = require('../models/userModel');
 adminController = {};
 
 adminController.getBanList = (req, res, next) => {
-  const roomId = req.query.roomId;
-  const query = {
-    text: `
+  if (req.query.room_id) {
+    const room_id = req.query.room_id;
+    const query = {
+      text: `
       SELECT rooms_users.banned, users.name as user_name from ROOMS_USERS 
       WHERE tickets.room_id=$1
       
-    `,
-    values: [roomId]
+      `,
+      values: [room_id]
+    }
+  } else {
+    const { room_id, user_ID } = req.body;
+    const query = {
+      text: `
+       UPDATE
+        
+      `,
+      values: [room_id, user_id]
+    }
   }
   db.query(query)
     .then(({rows}) => {
-      console.log(rows);
-      const usersStatus = rows.map(users => ({
-        userName: users.user_name,
-        bannedStatus: users.banned
+      console.log('rows received from getBanList query', rows);
+      const banList = rows.map(user => ({
+        userName: user.user_name,
+        bannedStatus: user.banned
       }))
       
-      res.locals.banList = usersStatus;
+      res.locals.banList = banList;
       return next();
     })
     .catch((err) => {
@@ -30,20 +41,5 @@ adminController.getBanList = (req, res, next) => {
     });
 };
 
-adminController.updateBanList = (req, res, next) => {
-  db.query('ENTER SQL QUERY HERE MOTHERFUCKER')
-    .then((data) => {
-      console.log(data);
-      // FINISH THIS EQUATION MOTHERFUCKER
-      // ALSO FIGURE OUT IF THESE ARE THE BEST NAMES
-      res.locals.banList = data;
-      return next();
-    })
-    .catch((err) => {
-      return next({
-        log: `Error in middleware adminController.updateBanList: ${err}`
-      });
-    });
-};
 
 module.exports = adminController;

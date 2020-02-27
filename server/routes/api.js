@@ -7,6 +7,7 @@ const jwtsController = require("../controllers/jwtsController");
 const userController = require("../controllers/userController");
 const ticketsController = require("../controllers/ticketsController");
 const roomsController = require("../controllers/roomsController");
+const adminController = require("../controllers/adminController");
 
 // ADD API ROUTES HERE
 apiRouter.get(
@@ -45,6 +46,20 @@ apiRouter.post(
     console.log("END OF ROOMS POST REQUEST", res.locals);
     res.status(200).json(res.locals);
   }
+);
+
+apiRouter.get(
+  "/admin/:roomId",
+  jwtsController.isLoggedIn,
+  adminController.getBanList,
+  (req, res) => res.status(200).json(res.locals)
+);
+
+apiRouter.patch(
+  "/admin",
+  jwtsController.isLoggedIn,
+  adminController.getBanList,
+  (req, res) => res.status(200).json(res.locals)
 );
 
 module.exports = apiRouter;
