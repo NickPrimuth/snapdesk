@@ -99,15 +99,15 @@ export const resolveTicket = id => (dispatch, getState) =>
 // don't actually delete the ticket from the DB, just set status to deleted so it isn't displayed
 axios
   .put('/api/tickets/update', {
-    ticketId: data.messageId,
+    ticketId: id,
     status: 'resolved',
     mentorId: getState().user.userId,
   })
-  .then(({ data }) => {
-    if (!data.isLoggedIn) {
+  .then(({ res }) => {
+    if (!res.isLoggedIn) {
       dispatch({
         type: types.USER_LOGOUT,
-        payload: data,
+        payload: res,
       })
     }
     else {
@@ -126,17 +126,17 @@ axios
     status: 'pending',
     mentorId: getState().user.userId,
   })
-  .then(({ data }) => {
-    if (!data.isLoggedIn) {
+  .then(({ res }) => {
+    if (!res.isLoggedIn) {
       dispatch({
         type: types.USER_LOGOUT,
-        payload: data,
+        payload: res,
       })
     }
     else {
       dispatch({
         type: types.ACCEPT_TICKET,
-        payload: id,
+        payload: data.messageId,
       })
     }     
   })
@@ -149,16 +149,16 @@ axios
     status: 'active',
     mentorId: null,
   })
-  .then(({ data }) => {
-    if (!data.isLoggedIn) {
+  .then(({ res }) => {
+    if (!res.isLoggedIn) {
       dispatch({
         type: types.USER_LOGOUT,
-        payload: data,
+        payload: res,
       })
     }
     else {
       dispatch({
-        type: types.CANCEL_ACCEPT,
+        type: types.RESOLVE_TICKET,
         payload: id,
       })
     }     
