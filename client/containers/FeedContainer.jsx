@@ -109,6 +109,8 @@ class FeedContainer extends Component {
             <MenteeTicketBox
               deleteTicket={this.props.deleteTicket}
               resolveTicket={this.props.resolveTicket}
+              updateRating={this.props.updateRating}
+              postFeedback={this.props.postFeedback}
               messageInput={this.props.activeTickets[i].messageInput}
               messageRating={this.props.activeTickets[i].messageRating}
               ticket={this.props.activeTickets[i]}
@@ -126,7 +128,11 @@ class FeedContainer extends Component {
         <h1>{this.props.roomName}</h1>
         <div className="ticketDisplay overflow-auto">{activeTickets}</div>
         <div className="ticketCreator">
-          <TicketCreator {...this.props} key={this.props.userId} socket={socket} />
+          <TicketCreator
+            {...this.props}
+            key={this.props.userId}
+            roomId={this.props.roomId}
+          />
         </div>
       </div>
     );

@@ -49,19 +49,32 @@ apiRouter.post(
 );
 
 apiRouter.get(
-  "/admin/:roomId",
+  "/rooms/:userId",
   jwtsController.isLoggedIn,
-  adminController.getBanList,
-  (req, res) => res.status(200).json(res.locals)
+  roomsController.getActiveRoom,
+  roomsController.getRooms,
+  (req, res) => {
+    res.status(200).json(res.locals);
+  }
 );
 
-apiRouter.patch(
-  "/admin",
+apiRouter.put(
+  "/rooms/:userId",
   jwtsController.isLoggedIn,
-  adminController.getBanList,
-  (req, res) => res.status(200).json(res.locals)
+  roomsController.updateActiveRoom,
+  roomsController.getActiveRoom,
+  (req, res) => {
+    res.status(200).json(res.locals);
+  }
 );
 
+apiRouter.post(
+  "/rooms/joinRoom",
+  // jwtsController.isLoggedIn,
+  roomsController.joinRoom,
+  roomsController.updateActiveRoom,
+  roomsController.getActiveRoom,
+  roomsController.getRooms,
+  (req, res) => res.status(200).json(res.locals)
+);
 module.exports = apiRouter;
-
-

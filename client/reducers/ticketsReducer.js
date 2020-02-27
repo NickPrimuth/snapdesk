@@ -17,7 +17,6 @@ const ticketState = {
   messageRating: '',
   activeTickets: [],
   ticketsCount: 0,
-  //roomId: ''
 };
 
 const ticketsReducer = (state = ticketState, action) => {
@@ -47,8 +46,9 @@ const ticketsReducer = (state = ticketState, action) => {
         menteeId: action.payload.menteeId,
         timestamp: action.payload.timestamp,
         status: 'active',
-        mentorId: '',
-        roomId: action.payload.roomId,
+        mentorId:'',
+        //adding new feedback
+        feedback: '',
       };
       // make a shallow copy of existing array and push new ticket to it
       let updatedTickets = state.activeTickets.slice();
@@ -80,6 +80,58 @@ const ticketsReducer = (state = ticketState, action) => {
         ...state,
         activeTickets: updatedTickets };
         
+    case types.CANCEL_ACCEPT:
+      //find index of the cancel-accept ticket
+      updatedTickets = state.activeTickets.map((ticket, index) => {
+        if (ticket.messageId === action.payload.messageId) {
+          idx = index;
+        }
+        return ticket;
+      });
+      //update ticket's status back to active and remove mentor id
+      updatedTickets[idx] =  {
+        ...updatedTickets[idx],
+        mentorId: '', 
+        status: 'active'
+      };
+      return { 
+        ...state,
+        activeTickets: updatedTickets };
+
+    case types.DELETE_TICKET:
+        updatedTickets = state.activeTickets.map((ticket, index) => {
+          if (ticket.messageId === action.payload) {
+            idx = index
+            return ticket
+          }
+          return ticket;
+        })
+        updatedTickets.splice(idx, 1)
+        // console.log(updatedTickets)
+      return { 
+        ...state,
+        activeTickets: updatedTickets,
+        ticketsCount: state.ticketsCount - 1
+      };
+
+    case types.POST_FEEDBACK: 
+      return {...state};
+
+    case types.RESOLVE_TICKET:
+        updatedTickets = state.activeTickets.map((ticket, index) => {
+          if (ticket.messageId === action.payload) {
+            idx = index
+            return ticket
+          }
+          return ticket;
+        })    
+        updatedTickets.splice(idx, 1)
+      return { 
+        ...state,
+        activeTickets: updatedTickets,
+        ticketsCount: state.ticketsCount - 1
+      };
+
     case types.UPDATE_MESSAGE:
       return { ...state, messageInput: action.payload };
 
