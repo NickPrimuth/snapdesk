@@ -61,15 +61,15 @@ class FeedContainer extends Component {
   }
 
   componentDidMount() {
-    //set the timer for how often the ticket feed will reload active tickets
-    // this.interval = setInterval(
-    //   () => this.props.getTickets(this.props.roomId),
-    //   5000
-    // );
+    // set the timer for how often the ticket feed will reload active tickets
+    this.interval = setInterval(
+      () => this.props.getTickets(this.props.roomId),
+      5000
+    );
   }
 
   componentWillUnmount() {
-    // clearInterval(this.interval);
+    clearInterval(this.interval);
     document.title = "SnapDesk";
   }
 
